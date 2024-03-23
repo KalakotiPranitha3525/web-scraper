@@ -1,0 +1,31 @@
+pip install requests
+pip install bs4
+import requests
+from bs4 import BeautifulSoup
+
+# Function to scrape data from a webpage
+def scrape_data(url):
+    # Send a GET request to the URL
+    response = requests.get(url)
+
+    # Check if request was successful (status code 200)
+    if response.status_code == 200:
+        # Parse the HTML content of the webpage
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        # Extract desired data from the webpage
+        # Example: Extracting all the links (anchor tags)
+        links = soup.find_all('a')
+
+        # Print out the extracted links
+        for link in links:
+            print(link.get('href'))
+    else:
+        # Print an error message if the request was not successful
+        print("Failed to retrieve webpage. Status code:", response.status_code)
+
+# URL of the webpage to scrape
+url = "http://www.values.com/inspirational-quotes"
+
+# Call the function to scrape data from the webpage
+scrape_data(url)
